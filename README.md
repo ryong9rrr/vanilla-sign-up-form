@@ -1,17 +1,41 @@
-## vanilla-SNS
+# 회원가입 폼 연습
 
-- 로그인, 회원가입, 메인화면으로 구성된 sns컨셉의 토이 프로젝트
+테스트 주도 개발로 회원가입 폼을 만들어보는 연습용 저장소입니다.
 
-3개의 화면, 라우팅, 문자열 템플릿
+<table>
+    <thead>
+        <tr>
+            <th colspan="2" style="text-align: center">
+                🛠 Skills & Tools
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: center">Language</td>
+            <td>TypeScript</td>
+        </tr>
+        <tr>
+            <td style="text-align: center">Style & Layout</td>
+            <td>HTML / TailWind CSS / HandleBars</td>
+        </tr>
+        <tr>
+            <td style="text-align: center">Bundler</td>
+            <td>parcel</td>
+        </tr>
+        <tr>
+            <td style="text-align: center">Test</td>
+            <td>Cypress</td>
+        </tr>
+        <tr>
+            <td style="text-align: center">keywords</td>
+            <td><strong>Vanilla JS</strong> | <strong>TypeScript</strong> | <strong>TailWind CSS</strong> | <strong>Web API</strong> | <strong>DOM API</strong> | <strong>상태관리</strong> | <strong>로컬스토리지</strong> | <strong>AJAX</strong> | <strong>비동기</strong></td>
+        </tr>
+    </tbody>
+</table>
 
-1. 회원가입을 하면 로컬스토리지에 저장
+</br>
 
-2. 로컬스토리지 값을 통해 로그인
+## 노션 바로가기
 
-3. 로그인에 성공하면 메인화면이 보임
-
-4. 메인 화면은 적절한 이미지 제너레이터로 렌더링
-
-# why project?
-
-로그인, 회원가입 창을 바닐라 자바스크립트로 만들어보기 위해
+🚩 [가이드](https://www.notion.so/ryong9rrr/929a2f4ac64549bdb830b5177bb9b13f)
