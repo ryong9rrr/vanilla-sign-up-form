@@ -1,7 +1,6 @@
 const template = `
     <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-        <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-
+        <div class="relative py-3 w-full sm:max-w-xl sm:mx-auto">
             <div class="leading-loose">
                 <form id="sign-up-form" class="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
                 <p class="text-gray-800 font-medium mb-5 text-center">{{title}}</p>
@@ -20,7 +19,6 @@ const template = `
                 </div>    
                 </form>
             </div>
-
         </div>
     </div>
 `;
