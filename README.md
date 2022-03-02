@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <td style="text-align: center">keywords</td>
-            <td><strong>Vanilla JS</strong> | <strong>TypeScript</strong> | <strong>TailWind CSS</strong> | <strong>Web API</strong> | <strong>DOM API</strong> | <strong>상태관리</strong> | <strong>로컬스토리지</strong> | <strong>AJAX</strong> | <strong>비동기</strong></td>
+            <td><strong>Vanilla JS</strong> | <strong>TypeScript</strong> | <strong>TailWind CSS</strong> | <strong>Handlebars</strong> | <strong>TDD</strong> | <strong>객체 지향</strong></td>
         </tr>
     </tbody>
 </table>
