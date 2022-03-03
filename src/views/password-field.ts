@@ -1,3 +1,5 @@
+import { RequireRule } from "../constant";
+import { ValidateRule } from "../types";
 import template from "./password-field.template";
 
 enum StrongLevel {
@@ -37,29 +39,33 @@ class PasswordField {
   private container: string;
   private data: Props;
   private updated: boolean = false;
+  private validateRules: ValidateRule[] = [];
 
   constructor(container: string, data: Props) {
     this.container = container;
     this.data = { ...DefaultProps, ...data };
+
+    if (this.data.require) {
+      this.validateRules.push(RequireRule);
+    }
   }
 
   public render = (append: boolean = false) => {
-    const container = document.querySelector(this.container) as HTMLElement;
+    if (!append) return;
 
-    if (append) {
-      const divFragment = document.createElement("div");
-      divFragment.innerHTML = this.template({
-        ...this.data,
-        updated: this.updated,
-        valid: true,
-        strongMessage: "",
-        strongLevel0: false,
-        strongLevel1: false,
-        strongLevel2: false,
-        strongLevel3: false,
-      });
-      container.appendChild(divFragment.children[0]);
-    }
+    const container = document.querySelector(this.container) as HTMLElement;
+    const divFragment = document.createElement("div");
+    divFragment.innerHTML = this.template({
+      ...this.data,
+      updated: this.updated,
+      valid: true,
+      strongMessage: "",
+      strongLevel0: false,
+      strongLevel1: false,
+      strongLevel2: false,
+      strongLevel3: false,
+    });
+    container.appendChild(divFragment.children[0]);
   };
 }
 

@@ -1,3 +1,5 @@
+import { RequireRule } from "../constant";
+import { ValidateRule } from "../types";
 import template from "./text-field.template";
 
 type Props = {
@@ -23,25 +25,29 @@ class TextField {
   private container: string;
   private data: Props;
   private updated: boolean = false;
+  private validateRules: ValidateRule[] = [];
 
   constructor(container: string, data: Props) {
     this.container = container;
     this.data = { ...DefaultProps, ...data };
+
+    if (this.data.require) {
+      this.validateRules.push(RequireRule);
+    }
   }
 
   public render = (append: boolean = false) => {
-    const container = document.querySelector(this.container) as HTMLElement;
+    if (!append) return;
 
-    if (append) {
-      const divFragment = document.createElement("div");
-      divFragment.innerHTML = this.template({
-        ...this.data,
-        updated: this.updated,
-        valid: true,
-        validateMessage: "",
-      });
-      container.appendChild(divFragment.children[0]);
-    }
+    const container = document.querySelector(this.container) as HTMLElement;
+    const divFragment = document.createElement("div");
+    divFragment.innerHTML = this.template({
+      ...this.data,
+      updated: this.updated,
+      valid: true,
+      validateMessage: "",
+    });
+    container.appendChild(divFragment.children[0]);
   };
 }
 

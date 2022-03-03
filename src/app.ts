@@ -15,6 +15,13 @@ class App {
     this.data = data;
     this.fields = [];
 
+    this.initialize();
+    setInterval(() => {
+      console.log("validation monitoring...");
+    }, 5000);
+  }
+
+  private initialize = () => {
     const nameField = new TextField("#required-fields", {
       id: "name",
       label: "이름",
@@ -62,7 +69,12 @@ class App {
     this.fields.push(passwordField);
     this.fields.push(passwordCheckField);
     this.fields.push(addressField);
-  }
+  };
+
+  private onSubmit = (e: Event) => {
+    e.preventDefault();
+    console.log("제출");
+  };
 
   public render() {
     this.container.innerHTML = this.template(this.data);
@@ -70,10 +82,7 @@ class App {
       field.render(true);
     });
 
-    this.container.addEventListener("submit", (e: Event) => {
-      e.preventDefault();
-      console.log("제출");
-    });
+    this.container.addEventListener("submit", this.onSubmit);
   }
 }
 

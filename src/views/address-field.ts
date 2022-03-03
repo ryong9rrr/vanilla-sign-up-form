@@ -23,16 +23,15 @@ class AddressField {
   }
 
   public render = (append: boolean = false) => {
+    if (!append) return;
+
     const container = document.querySelector(this.container) as HTMLElement;
+    const divFragment = document.createElement("div");
+    divFragment.innerHTML = this.template({
+      ...this.data,
+    });
 
-    if (append) {
-      const divFragment = document.createElement("div");
-      divFragment.innerHTML = this.template({
-        ...this.data,
-      });
-
-      container.appendChild(divFragment.firstElementChild as HTMLElement);
-    }
+    container.appendChild(divFragment.firstElementChild as HTMLElement);
   };
 }
 
