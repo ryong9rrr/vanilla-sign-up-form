@@ -16,6 +16,7 @@ class App {
     this.fields = [];
 
     this.initialize();
+
     setInterval(() => {
       console.log("validation monitoring...");
     }, 5000);
