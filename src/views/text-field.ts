@@ -1,5 +1,6 @@
 import { RequireRule } from "../constant";
 import { ValidateRule } from "../types";
+import { nextTick } from "../utils";
 import template from "./text-field.template";
 
 type Props = {
@@ -34,19 +35,59 @@ class TextField {
     if (this.data.require) {
       this.validateRules.push(RequireRule);
     }
+
+    // 계속해서 이벤트를 받기 위해 setTimeout을 걸어줬다.
+    nextTick(this.attachEventHandler);
   }
+
+  private update = () => {
+    const container = document.querySelector(
+      `#field-${this.data.id}`
+    ) as HTMLElement;
+    const divFragment = document.createElement("div");
+    divFragment.innerHTML = this.template(this.buildData());
+    container.innerHTML = divFragment.children[0].innerHTML;
+  };
+
+  private onChange = (e: Event) => {
+    const { value, id } = e.target as HTMLInputElement;
+
+    if (this.data.id === id) {
+      this.updated = true;
+      this.data.text = value;
+      this.update();
+    }
+  };
+
+  private attachEventHandler = () => {
+    document
+      .querySelector(this.container)
+      ?.addEventListener("change", this.onChange);
+  };
+
+  private buildData = () => {
+    if (this.updated) {
+      return {
+        ...this.data,
+        updated: this.updated,
+        valid: true,
+        validateMessage: "",
+      };
+    }
+    return {
+      ...this.data,
+      updated: this.updated,
+      valid: true,
+      validateMessage: "",
+    };
+  };
 
   public render = (append: boolean = false) => {
     if (!append) return;
 
     const container = document.querySelector(this.container) as HTMLElement;
     const divFragment = document.createElement("div");
-    divFragment.innerHTML = this.template({
-      ...this.data,
-      updated: this.updated,
-      valid: true,
-      validateMessage: "",
-    });
+    divFragment.innerHTML = this.template(this.buildData());
     container.appendChild(divFragment.children[0]);
   };
 }
