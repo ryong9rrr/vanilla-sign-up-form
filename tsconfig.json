@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
+    "target": "ES5",
     "strict": true,
     "module": "CommonJS",
     "sourceMap": true,
-    "lib": ["ES6", "dom"],
-    "alwaysStrict": true,
+    "lib": ["dom"],
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true
   }
 }

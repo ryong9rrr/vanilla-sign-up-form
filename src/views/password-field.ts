@@ -1,5 +1,6 @@
 import { RequireRule } from "../constant";
 import { ValidateRule } from "../types";
+import { nextTick } from "../utils";
 import template from "./password-field.template";
 
 enum StrongLevel {
@@ -48,14 +49,37 @@ class PasswordField {
     if (this.data.require) {
       this.validateRules.push(RequireRule);
     }
+
+    nextTick(this.attachEventHandler);
   }
 
-  public render = (append: boolean = false) => {
-    if (!append) return;
-
-    const container = document.querySelector(this.container) as HTMLElement;
+  private update = () => {
+    const container = document.querySelector(
+      `#field-${this.data.id}`
+    ) as HTMLElement;
     const divFragment = document.createElement("div");
-    divFragment.innerHTML = this.template({
+    divFragment.innerHTML = this.template(this.buildData());
+    container.innerHTML = divFragment.children[0].innerHTML;
+  };
+
+  private onChange = (e: Event) => {
+    const { value, id } = e.target as HTMLInputElement;
+
+    if (this.data.id === id) {
+      this.updated = true;
+      this.data.text = value;
+      this.update();
+    }
+  };
+
+  private attachEventHandler = () => {
+    document
+      .querySelector(this.container)
+      ?.addEventListener("change", this.onChange);
+  };
+
+  private buildData = () => {
+    return {
       ...this.data,
       updated: this.updated,
       valid: true,
@@ -64,7 +88,15 @@ class PasswordField {
       strongLevel1: false,
       strongLevel2: false,
       strongLevel3: false,
-    });
+    };
+  };
+
+  public render = (append: boolean = false) => {
+    if (!append) return;
+
+    const container = document.querySelector(this.container) as HTMLElement;
+    const divFragment = document.createElement("div");
+    divFragment.innerHTML = this.template(this.buildData());
     container.appendChild(divFragment.children[0]);
   };
 }

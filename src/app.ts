@@ -17,6 +17,7 @@ class App {
 
     this.initialize();
 
+    //1000/30
     setInterval(() => {
       console.log("validation monitoring...");
     }, 5000);
