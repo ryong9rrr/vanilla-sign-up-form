@@ -40,6 +40,36 @@ class TextField {
     nextTick(this.attachEventHandler);
   }
 
+  private validate = (): ValidateRule | null => {
+    const target = this.data.text ? this.data.text.trim() : "";
+
+    const invalidateRules = this.validateRules.filter(
+      (validateRule) => validateRule.rule.test(target) !== validateRule.match
+    );
+
+    return invalidateRules.length > 0 ? invalidateRules[0] : null;
+  };
+
+  private buildData = () => {
+    if (!this.updated) {
+      return {
+        ...this.data,
+        updated: this.updated,
+        valid: true,
+        validateMessage: "",
+      };
+    }
+
+    const isInvalid: ValidateRule | null = this.validate();
+
+    return {
+      ...this.data,
+      updated: this.updated,
+      valid: !isInvalid,
+      validateMessage: !!isInvalid ? isInvalid.message : "",
+    };
+  };
+
   private update = () => {
     const container = document.querySelector(
       `#field-${this.data.id}`
@@ -63,23 +93,6 @@ class TextField {
     document
       .querySelector(this.container)
       ?.addEventListener("change", this.onChange);
-  };
-
-  private buildData = () => {
-    if (this.updated) {
-      return {
-        ...this.data,
-        updated: this.updated,
-        valid: true,
-        validateMessage: "",
-      };
-    }
-    return {
-      ...this.data,
-      updated: this.updated,
-      valid: true,
-      validateMessage: "",
-    };
   };
 
   public render = (append: boolean = false) => {
