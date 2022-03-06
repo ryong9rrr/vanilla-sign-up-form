@@ -2,6 +2,7 @@ import template from "./app.template";
 import { AnyObject } from "./types";
 import AddressField from "./views/address-field";
 import PasswordField from "./views/password-field";
+import PasswordCheckField from "./views/passwordCheck-field";
 import TextField from "./views/text-field";
 
 class App {
@@ -54,7 +55,7 @@ class App {
       placeholder: "비밀번호를 입력해주세요",
     });
 
-    const passwordCheckField = new PasswordField("#required-fields", {
+    const passwordCheckField = new PasswordCheckField("#required-fields", {
       id: "password-check",
       label: "비밀번호 확인",
       placeholder: "비밀번호를 한번 더 입력해주세요",

@@ -1,14 +1,7 @@
 import { RequireRule } from "../constant";
 import { ValidateRule } from "../types";
 import { nextTick } from "../utils";
-import template from "./password-field.template";
-
-enum StrongLevel {
-  None = 0,
-  Light,
-  Medium,
-  Heavy,
-}
+import template from "./passwordCheck-field.template";
 
 type Props = {
   id: string;
@@ -16,7 +9,6 @@ type Props = {
   text?: string;
   placeholder?: string;
   require?: boolean;
-  strong?: StrongLevel;
 };
 
 const DefaultProps: Props = {
@@ -25,17 +17,9 @@ const DefaultProps: Props = {
   text: "",
   placeholder: "텍스트를 입력해주세요",
   require: true,
-  strong: StrongLevel.None,
 };
 
-const StrongMessage: [string, string, string, string] = [
-  "금지된 수준",
-  "심각한 수준",
-  "보통 수준",
-  "강력한 암호",
-];
-
-class PasswordField {
+class PasswordCheckField {
   private template = template;
   private container: string;
   private data: Props;
@@ -64,19 +48,24 @@ class PasswordField {
   };
 
   private buildData = () => {
-    let strongLevel = 0;
     const isInvalid: ValidateRule | null = this.validate();
+    const password = (document.querySelector("#password") as HTMLInputElement)
+      ?.value;
+
+    if (!isInvalid && this.data.text !== password) {
+      return {
+        ...this.data,
+        updated: this.updated,
+        valid: false,
+        validateMessage: "비밀번호가 동일하지 않아요.",
+      };
+    }
 
     return {
       ...this.data,
       updated: this.updated,
       valid: this.updated ? !isInvalid : true,
       validateMessage: this.updated && !!isInvalid ? isInvalid.message : "",
-      strongLevel0: true,
-      strongLevel1: false,
-      strongLevel2: false,
-      strongLevel3: false,
-      strongMessage: strongLevel < 0 ? "" : StrongMessage[strongLevel],
     };
   };
 
@@ -115,4 +104,4 @@ class PasswordField {
   };
 }
 
-export default PasswordField;
+export default PasswordCheckField;
