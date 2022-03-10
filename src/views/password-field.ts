@@ -1,4 +1,5 @@
 import { RequireRule } from "../constant";
+import Field from "../core/Field";
 import { ValidateRule } from "../types";
 import { nextTick } from "../utils";
 import template from "./password-field.template";
@@ -35,19 +36,19 @@ const StrongMessage: [string, string, string, string] = [
   "강력한 암호",
 ];
 
-class PasswordField {
+class PasswordField extends Field {
   private template = template;
   private container: string;
   private data: Props;
   private updated: boolean = false;
-  private validateRules: ValidateRule[] = [];
 
   constructor(container: string, data: Props) {
+    super();
     this.container = container;
     this.data = { ...DefaultProps, ...data };
 
     if (this.data.require) {
-      this.validateRules.push(RequireRule);
+      this.addValidateRule(RequireRule);
     }
 
     nextTick(this.attachEventHandler);

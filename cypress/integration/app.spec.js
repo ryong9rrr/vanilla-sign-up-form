@@ -93,18 +93,33 @@ describe("회원가입 폼 테스트", () => {
       anyClicked();
       cy.get("#field-password label").last().should("have.text", "강력한 암호");
     });
-
-    it("암호 수준이 '보통 수준' 이상일 경우 유효", () => {
-      //비밀번호 수준이 3단계 이상일 경우 유효
-    });
   });
 
   context("유효성 검증 테스트", () => {
-    it("'이름'은 3글자 이상이어야 한다.", () => {
-      //
+    it("아이디", () => {
+      // 1. 공백을 포함할 수 없다.
+      cy.get("#id").type("y sy");
+      anyClicked();
+      cy.get("#field-id .check").should("have.class", "text-gray-200");
+      // 2. 숫자로 시작할 수 없다.
+      cy.get("#id").clear();
+      cy.get("#id").type("1ysy");
+      anyClicked();
+      cy.get("#field-id .check").should("have.class", "text-gray-200");
+      // 3. 3글자 이상이어야 한다.
+      cy.get("#id").clear();
+      cy.get("#id").type("ys");
+      anyClicked();
+      cy.get("#field-id .check").should("have.class", "text-gray-200");
     });
 
-    it("비밀번호확인 필드는 비밀번호 필드와 동일한 값이어야 한다.", () => {
+    it("비밀번호", () => {
+      // 금지된 수준, 심각한 수준이라면 초록불이 들어오지 않는다.
+      // 비밀번호와 비밀번호 확인을 어떻게 할지 생각해보자
+    });
+
+    it("비밀번호확인", () => {
+      // 비밀번호확인 필드는 비밀번호 필드와 동일한 값이어야 한다.
       // 1. 동일한 값일 경우, 초록불이 들어오는 것 확인
       cy.get("#password").type(`qwer123!@#`);
       cy.get("#password-check").type(`qwer123!@#`);
