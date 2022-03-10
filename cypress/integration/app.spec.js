@@ -29,11 +29,11 @@ describe("회원가입 폼 테스트", () => {
 
   context("사용자 경험 테스트", () => {
     it("필수입력필드를 입력하고 넘어가면 초록불이 뜬다.", () => {
-      cy.get("#field-name").type(`용상윤`);
-      cy.get("#field-id").type(`ysy`);
-      cy.get("#field-email").type(`ysy@naver.com`);
-      cy.get("#field-password").type(`123123`);
-      cy.get("#field-password-check").type(`123123`);
+      cy.get("#name").type(`용상윤`);
+      cy.get("#id").type(`ysy`);
+      cy.get("#email").type(`ysy@naver.com`);
+      cy.get("#password").type(`123123`);
+      cy.get("#password-check").type(`123123`);
       anyClicked();
 
       cy.get("#required-fields .check").each(($el) => {
@@ -42,11 +42,11 @@ describe("회원가입 폼 테스트", () => {
     });
 
     it("필수입력필드를 입력하지 않고 넘어가면 사용자에게 피드백을 준다.", () => {
-      cy.get("#field-name").type(`용상윤`);
-      cy.get("#field-id").type(`ysy`);
-      cy.get("#field-email").type(`ysy@naver.com`);
-      cy.get("#field-password").type(`123123`);
-      cy.get("#field-password-check").type(`123123`);
+      cy.get("#name").type(`용상윤`);
+      cy.get("#id").type(`ysy`);
+      cy.get("#email").type(`ysy@naver.com`);
+      cy.get("#password").type(`123123`);
+      cy.get("#password-check").type(`123123`);
       anyClicked();
 
       cy.get("#name").clear();
@@ -73,8 +73,29 @@ describe("회원가입 폼 테스트", () => {
     });
 
     it("비밀번호에는 '암호 수준'이 있다.", () => {
-      // 비밀번호 수준이 2단계 이상일 경우 유효
-      // 1~4단계가 있음.
+      //1. '금지된 수준': 0 자리 초과일 경우
+      cy.get("#password").type(`abcdef`);
+      anyClicked();
+      cy.get("#field-password label").last().should("have.text", "금지된 수준");
+      cy.get("#password").clear();
+      //2. '심각한 수준': 12 자리 초과일 경우
+      cy.get("#password").type(`qwerqwerqwerq`);
+      anyClicked();
+      cy.get("#field-password label").last().should("have.text", "심각한 수준");
+      cy.get("#password").clear();
+      //3. '보통 수준': 특수문자가 포함될 경우
+      cy.get("#password").type(`qwerqwerqwer!`);
+      anyClicked();
+      cy.get("#field-password label").last().should("have.text", "보통 수준");
+      cy.get("#password").clear();
+      //4. '강력한 암호': 숫자가 포함될 경우
+      cy.get("#password").type(`qwerqwerqwer!123`);
+      anyClicked();
+      cy.get("#field-password label").last().should("have.text", "강력한 암호");
+    });
+
+    it("암호 수준이 '보통 수준' 이상일 경우 유효", () => {
+      //비밀번호 수준이 3단계 이상일 경우 유효
     });
   });
 
@@ -85,8 +106,8 @@ describe("회원가입 폼 테스트", () => {
 
     it("비밀번호확인 필드는 비밀번호 필드와 동일한 값이어야 한다.", () => {
       // 1. 동일한 값일 경우, 초록불이 들어오는 것 확인
-      cy.get("#field-password").type(`qwer123!@#`);
-      cy.get("#field-password-check").type(`qwer123!@#`);
+      cy.get("#password").type(`qwer123!@#`);
+      cy.get("#password-check").type(`qwer123!@#`);
       anyClicked();
       cy.get("#field-password .check").should("have.class", "text-green-500");
       cy.get("#field-password-check .check").should(
@@ -95,8 +116,8 @@ describe("회원가입 폼 테스트", () => {
       );
 
       // 2. 동일하지 않은 값일 경우 초록불이 꺼지고, 메세지가 출력하는지 확인
-      cy.get("#field-password").type(`qwer123!@#`);
-      cy.get("#field-password-check").type(`qwer123!@##`);
+      cy.get("#password").type(`qwer123!@#`);
+      cy.get("#password-check").type(`qwer123!@##`);
       anyClicked();
       cy.get("#field-password .check").should("have.class", "text-green-500");
       cy.get("#field-password-check .check").should(
@@ -106,8 +127,8 @@ describe("회원가입 폼 테스트", () => {
       cy.get(".message").should("have.text", "비밀번호가 동일하지 않아요.");
 
       // 3. 빈 값을 입력했을 때는 필수입력항목이라는 메세지를 출력
-      cy.get("#field-password").type(`qwer123!@#`);
-      cy.get("#field-password-check").type(`qwer123!@##`);
+      cy.get("#password").type(`qwer123!@#`);
+      cy.get("#password-check").type(`qwer123!@##`);
       anyClicked();
       cy.get("#password-check").clear();
       anyClicked();

@@ -64,18 +64,34 @@ class PasswordField {
   };
 
   private buildData = () => {
-    let strongLevel = 0;
+    let strongLevel = -1;
     const isInvalid: ValidateRule | null = this.validate();
+
+    if (this.data.text!.length > 0) {
+      strongLevel++;
+    }
+
+    if (this.data.text!.length > 12) {
+      strongLevel++;
+    }
+
+    if (/[!@#$%^&*()]/.test(this.data.text!)) {
+      strongLevel++;
+    }
+
+    if (/\d/.test(this.data.text!)) {
+      strongLevel++;
+    }
 
     return {
       ...this.data,
       updated: this.updated,
       valid: this.updated ? !isInvalid : true,
       validateMessage: this.updated && !!isInvalid ? isInvalid.message : "",
-      strongLevel0: true,
-      strongLevel1: false,
-      strongLevel2: false,
-      strongLevel3: false,
+      strongLevel0: strongLevel >= 1,
+      strongLevel1: strongLevel >= 2,
+      strongLevel2: strongLevel >= 3,
+      strongLevel3: strongLevel >= 4,
       strongMessage: strongLevel < 0 ? "" : StrongMessage[strongLevel],
     };
   };
