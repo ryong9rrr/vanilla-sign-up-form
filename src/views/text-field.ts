@@ -1,4 +1,5 @@
 import { RequireRule } from "../constant";
+import Field from "../core/Field";
 import { ValidateRule } from "../types";
 import { nextTick } from "../utils";
 import template from "./text-field.template";
@@ -21,19 +22,19 @@ const DefaultProps = {
   require: false,
 };
 
-class TextField {
+class TextField extends Field {
   private template = template;
   private container: string;
   private data: Props;
   private updated: boolean = false;
-  private validateRules: ValidateRule[] = [];
 
   constructor(container: string, data: Props) {
+    super();
     this.container = container;
     this.data = { ...DefaultProps, ...data };
 
     if (this.data.require) {
-      this.validateRules.push(RequireRule);
+      this.addValidateRule(RequireRule);
     }
 
     // 계속해서 이벤트를 받기 위해 setTimeout을 걸어줬다.

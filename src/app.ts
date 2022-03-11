@@ -1,4 +1,9 @@
 import template from "./app.template";
+import {
+  CantContainWhitespace,
+  CantStartNumber,
+  MinimumLengthLimit,
+} from "./constant";
 import { AnyObject } from "./types";
 import AddressField from "./views/address-field";
 import PasswordField from "./views/password-field";
@@ -65,6 +70,12 @@ class App {
       id: "address",
       label: "배송지 주소",
     });
+
+    idField.addValidateRule(CantContainWhitespace);
+    idField.addValidateRule(CantStartNumber);
+    idField.addValidateRule(MinimumLengthLimit(3));
+
+    emailField.addValidateRule(CantContainWhitespace);
 
     this.fields.push(nameField);
     this.fields.push(idField);
