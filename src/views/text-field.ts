@@ -96,6 +96,10 @@ class TextField extends Field {
       ?.addEventListener("change", this.onChange);
   };
 
+  public get isValid(): boolean {
+    return !this.validate();
+  }
+
   public render = (append: boolean = false) => {
     if (!append) return;
 
