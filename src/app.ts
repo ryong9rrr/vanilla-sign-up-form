@@ -24,9 +24,7 @@ class App {
     this.initialize();
 
     //1000/30
-    setInterval(() => {
-      console.log("validation monitoring...");
-    }, 5000);
+    setInterval(this.validFieldMonitor, 1000);
   }
 
   private initialize = () => {
@@ -85,9 +83,20 @@ class App {
     this.fields.push(addressField);
   };
 
+  private validFieldMonitor = () => {
+    const btnJoin = this.container.querySelector(
+      "#btn-join"
+    ) as HTMLButtonElement;
+
+    console.log(this.fields.filter((field) => field.isValid));
+  };
+
   private onSubmit = (e: Event) => {
     e.preventDefault();
-    console.log("제출");
+
+    // 비밀번호가 다르다면
+
+    // 비밀번호의 수준이 낮다면
   };
 
   public render() {

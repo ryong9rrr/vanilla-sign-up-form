@@ -37,6 +37,13 @@ class PasswordCheckField {
     nextTick(this.attachEventHandler);
   }
 
+  private isMatchedPassword = (): boolean => {
+    const password = (document.querySelector("#password") as HTMLInputElement)
+      ?.value;
+
+    return this.data.text === password;
+  };
+
   private validate = (): ValidateRule | null => {
     const target = this.data.text ? this.data.text.trim() : "";
 
@@ -44,22 +51,20 @@ class PasswordCheckField {
       (validateRule) => validateRule.rule.test(target) !== validateRule.match
     );
 
-    return invalidateRules.length > 0 ? invalidateRules[0] : null;
+    // rule, match에는 일단 아무값이나 넣었음
+    return invalidateRules.length > 0
+      ? invalidateRules[0]
+      : this.isMatchedPassword()
+      ? null
+      : {
+          rule: /fd/g,
+          match: true,
+          message: "비밀번호가 동일하지 않아요.",
+        };
   };
 
   private buildData = () => {
     const isInvalid: ValidateRule | null = this.validate();
-    const password = (document.querySelector("#password") as HTMLInputElement)
-      ?.value;
-
-    if (!isInvalid && this.data.text !== password) {
-      return {
-        ...this.data,
-        updated: this.updated,
-        valid: false,
-        validateMessage: "비밀번호가 동일하지 않아요.",
-      };
-    }
 
     return {
       ...this.data,
@@ -93,6 +98,10 @@ class PasswordCheckField {
       .querySelector(this.container)
       ?.addEventListener("change", this.onChange);
   };
+
+  public get isValid(): boolean {
+    return !this.validate();
+  }
 
   public render = (append: boolean = false) => {
     if (!append) return;
