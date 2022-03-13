@@ -87,7 +87,9 @@ class App {
 
   private onSubmit = (e: Event) => {
     e.preventDefault();
-    console.log("제출");
+    // 비밀번호가 다르다면
+
+    // 비밀번호의 수준이 낮다면
   };
 
   public render() {
