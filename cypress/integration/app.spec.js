@@ -203,17 +203,6 @@ describe("회원가입 폼 테스트", () => {
         cy.wait(500);
         cy.get("#btn-join").should("have.class", "bg-gray-300");
       });
-
-      it("비밀번호의 수준이 낮을 때", () => {
-        cy.get("#name").type(`용상윤`);
-        cy.get("#id").type(`ysy`);
-        cy.get("#email").type(`ysy@naver.com`);
-        cy.get("#password").type(`123123123`);
-        cy.get("#password-check").type(`123123123`);
-        anyClicked();
-        cy.wait(500);
-        cy.get("#btn-join").should("have.class", "bg-gray-300");
-      });
     });
 
     it("모두 유효한 값이라면 버튼이 활성화된다.", () => {

@@ -126,6 +126,14 @@ class PasswordField extends Field {
     return !this.validate();
   }
 
+  public get name(): string {
+    return this.data.id;
+  }
+
+  public get value(): string {
+    return this.data.text || "";
+  }
+
   public render = (append: boolean = false) => {
     if (!append) return;
 

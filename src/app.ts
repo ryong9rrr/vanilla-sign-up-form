@@ -106,9 +106,11 @@ class App {
 
     if (!this.active) return;
 
-    // 비밀번호의 수준이 낮다면
+    const submitData: AnyObject = this.fields
+      .map((field) => ({ [field.name]: field.value }))
+      .reduce((a, b) => ({ ...a, ...b }), {});
 
-    console.log("제출");
+    console.log(submitData);
   };
 
   public render() {
