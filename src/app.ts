@@ -4,11 +4,13 @@ import {
   CantStartNumber,
   MinimumLengthLimit,
 } from "./constant";
-import { AnyObject } from "./types";
-import AddressField from "./views/address-field";
-import PasswordField from "./views/password-field";
-import PasswordCheckField from "./views/passwordCheck-field";
-import TextField from "./views/text-field";
+import { AnyObject, User } from "./types";
+import {
+  AddressField,
+  TextField,
+  PasswordField,
+  PasswordCheckField,
+} from "./views";
 
 class App {
   private template = template;
@@ -106,6 +108,7 @@ class App {
 
     if (!this.active) return;
 
+    // User 타입으로 타입규격을 정하고 싶다면 어떻게 해야할까?
     const submitData: AnyObject = this.fields
       .map((field) => ({ [field.name]: field.value }))
       .reduce((a, b) => ({ ...a, ...b }), {});

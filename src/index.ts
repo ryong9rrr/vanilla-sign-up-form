@@ -6,6 +6,7 @@ declare global {
     Handlebars: {
       compile: (template: string) => (data: AnyObject) => string;
     };
+    daum: any;
   }
 }
 
