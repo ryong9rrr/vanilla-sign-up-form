@@ -15,6 +15,7 @@ class App {
   private container: HTMLElement;
   private data: AnyObject;
   private fields: AnyObject[];
+  private active: boolean = false;
 
   constructor(container: string, data: AnyObject = {}) {
     this.container = document.querySelector(container) as HTMLElement;
@@ -23,8 +24,7 @@ class App {
 
     this.initialize();
 
-    //1000/30
-    setInterval(this.validFieldMonitor, 1000);
+    setInterval(this.validFieldMonitor, 1000 / 30);
   }
 
   private initialize = () => {
@@ -88,15 +88,27 @@ class App {
       "#btn-join"
     ) as HTMLButtonElement;
 
-    console.log(this.fields.filter((field) => field.isValid));
+    if (
+      this.fields.filter((field) => field.isValid).length === this.fields.length
+    ) {
+      this.active = true;
+      btnJoin.classList.remove("bg-gray-300");
+      btnJoin.classList.add("bg-green-500");
+    } else {
+      this.active = false;
+      btnJoin.classList.remove("bg-green-500");
+      btnJoin.classList.add("bg-gray-300");
+    }
   };
 
   private onSubmit = (e: Event) => {
     e.preventDefault();
 
-    // 비밀번호가 다르다면
+    if (!this.active) return;
 
     // 비밀번호의 수준이 낮다면
+
+    console.log("제출");
   };
 
   public render() {

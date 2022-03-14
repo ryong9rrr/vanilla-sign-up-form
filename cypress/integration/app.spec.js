@@ -189,7 +189,7 @@ describe("회원가입 폼 테스트", () => {
         cy.get("#password").type(`123123`);
         cy.get("#password-check").type(`123123`);
         anyClicked();
-
+        cy.wait(500);
         cy.get("#btn-join").should("have.class", "bg-gray-300");
       });
 
@@ -200,7 +200,7 @@ describe("회원가입 폼 테스트", () => {
         cy.get("#password").type(`123123`);
         cy.get("#password-check").type(`123123123`);
         anyClicked();
-
+        cy.wait(500);
         cy.get("#btn-join").should("have.class", "bg-gray-300");
       });
 
@@ -211,7 +211,7 @@ describe("회원가입 폼 테스트", () => {
         cy.get("#password").type(`123123123`);
         cy.get("#password-check").type(`123123123`);
         anyClicked();
-
+        cy.wait(500);
         cy.get("#btn-join").should("have.class", "bg-gray-300");
       });
     });
@@ -223,7 +223,7 @@ describe("회원가입 폼 테스트", () => {
       cy.get("#password").type(`qwerqwer1234!@#$`);
       cy.get("#password-check").type(`qwerqwer1234!@#$`);
       anyClicked();
-
+      cy.wait(500);
       cy.get("#btn-join").should("have.class", "bg-green-500");
     });
   });

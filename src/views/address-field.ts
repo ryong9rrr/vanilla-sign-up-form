@@ -22,6 +22,10 @@ class AddressField {
     this.data = { ...DefaultProps, ...data };
   }
 
+  public get isValid() {
+    return true;
+  }
+
   public render = (append: boolean = false) => {
     if (!append) return;
 
