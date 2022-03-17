@@ -7,3 +7,5 @@ export type ValidateRule = {
   match: boolean;
   message: string;
 };
+
+export type Template = (data: AnyObject) => string;

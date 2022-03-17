@@ -37,13 +37,11 @@ const StrongMessage: [string, string, string, string] = [
 ];
 
 class PasswordField extends Field {
-  private template = template;
-  private container: string;
   private data: Props;
   private updated: boolean = false;
 
   constructor(container: string, data: Props) {
-    super();
+    super({ template, container });
     this.container = container;
     this.data = { ...DefaultProps, ...data };
 

@@ -1,6 +1,6 @@
 import { RequireRule } from "../constant";
 import Field from "../core/Field";
-import { ValidateRule } from "../types";
+import { Template, ValidateRule } from "../types";
 import { nextTick } from "../utils";
 import template from "./text-field.template";
 
@@ -23,14 +23,11 @@ const DefaultProps = {
 };
 
 class TextField extends Field {
-  private template = template;
-  private container: string;
   private data: Props;
   private updated: boolean = false;
 
   constructor(container: string, data: Props) {
-    super();
-    this.container = container;
+    super({ template, container });
     this.data = { ...DefaultProps, ...data };
 
     if (this.data.require) {
