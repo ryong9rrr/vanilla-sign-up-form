@@ -1,10 +1,10 @@
 import App from "./app";
-import { AnyObject } from "./types";
+import { Template } from "./types";
 
 declare global {
   interface Window {
     Handlebars: {
-      compile: (template: string) => (data: AnyObject) => string;
+      compile: (template: string) => Template;
     };
     daum: any;
   }
